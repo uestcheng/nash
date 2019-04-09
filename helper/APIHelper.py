@@ -47,9 +47,32 @@ class APIHelper(object):
         return getattr(self.s, '_{}'.format(method))(*args, **kwargs)
 
     @classmethod
-    def json_compare(actual, exception):
+    def json_compare(actual, expectation):
         """compare two dictionary"""
-        pass
+        if not isinstance(expectation, type(actual)):
+        Logger.log_error('actual and expectation do not have the same type')
+    elif isinstance(expectation, list):
+        if not actual:
+            Logger.log_info("the two obj is the same")
+        for i, e in enumerate(expectation):
+            if e == actual[i]:
+                Logger.log_info("the {1} element is equall".format(i))
+                object_schema_compare(expectation[i], actual[i])
+            else:
+                Logger.log_error("the {1} element is not equal".format(i))
+    elif isinstance(expectation, dict):
+        if not actual:
+            Logger.log_info("the two obj is the same")
+        for k, v in expectation.items():
+            if k in actual.keys() and expectation[k] == actual[k]:
+                Logger.log_info("the {key}'s mapping is the same".format(key=k))
+                object_schema_compare(expectation[k], actual[k])
+            else:
+                Logger.log_error("the {key}'s mapping is not the same".format(key=k))
+    elif expectation == actual:
+        Logger.log_info("two result is the same")
+    else:
+        Logger.log_error("two result is not the same")
 
     def _simply_dictionary_structure(obj):
         """iterate all the schema of obj, replace all the values to a symbol"""
