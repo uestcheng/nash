@@ -1,0 +1,11 @@
+class Singleton(object):
+    def __new__(cls, *arg, **kwarg):
+        if not hasattr(cls, '_instance'):
+            cls._instance = super().__new__(cls, *arg, **kwarg)
+        return cls._instance
+
+A = Singleton()
+B = Singleton()
+
+print(id(A))
+print(id(B))
