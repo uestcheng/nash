@@ -13,6 +13,7 @@ class APIHelper(object):
         self.s = requests.Session()
         data = os.path.join(os.path.dirname(os.path.abspath(__file__), 'data.yml')
         self.url = data[env]
+        requests.packages.urllib3.disable_warnings(InsecureRequestWarnings)
 
     def _get(self, uri, *args, **kwargs):
         """get response.

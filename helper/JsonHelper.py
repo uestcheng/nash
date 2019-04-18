@@ -1,23 +1,8 @@
-<<<<<<< HEAD
 #-*- coding:utf-8 -*-
 
 
 class Stack(object):
     """Stack implementation"""
-=======
-#-*- coding:utf -*-
-
-
-class Stack(object):
-    """Stack implementation 
-       store different pack    
-    """
-    def __new__(cls, *args, **kwargs):
-        if not hasattr(cls, '_instance'):
-            cls._instance = super().__new__(cls, *args, **kwargs)
-        return cls._instance
-
->>>>>>> 9a9f63ba265cb76be8d77c17601f3ec4f8fe725d
     def __init__(self):
         self.stack = []
 
@@ -25,7 +10,6 @@ class Stack(object):
         self.stack.append(item)
 
     def __repr__(self):
-<<<<<<< HEAD
         _str = ""
         for i in self.stack:
             _str += str(i) 
@@ -63,6 +47,15 @@ def _is_dict_same(expected, actual, ignore_value_of_keys, ignore_missing_keys):
                 ))
     is_same_flag, stack = _is_same(expected, actual, ignore_value_of_keys, ignore_missing_keys)
     return is_same_flag, stack()
+
+def _is_list_same(expected, actual, ignore_missing_keys):
+    if ignore_missing_keys:
+            return True, Stack()
+    else:
+        if sorted(expected) != sorted(actual):
+            return False, Stack().append(Item(
+                'Length Mismatch: Length is NOT the same'
+        )) 
     
 def _is_same(expected, actual, ignore_value_of_keys=True, ignore_missing_keys=False):
     if expected is None or type(expected) in (int, bool, str, float):
@@ -77,7 +70,10 @@ def _is_same(expected, actual, ignore_value_of_keys=True, ignore_missing_keys=Fa
         _is_dict_same(expected, actual, ignore_value_of_keys, ignore_missing_keys):
     
     if isinstance(expected, list):
-        pass
+        _is_list_same(expected, actual, ignore_missing_keys)
+
+    return False, Stack().append(Item('Uncaught Type'))
+        
 
 
 
@@ -85,18 +81,3 @@ def _is_same(expected, actual, ignore_value_of_keys=True, ignore_missing_keys=Fa
 
     
         
-=======
-        __str = ''
-        for i in stack:
-            __str += i
-        return __str
-
-
-class StackItem(object):
-    """stack item implementation"""
-
-    def __init__(self, reason, expected, actual):
-        self.reason = reason
-        self.expected = expected
-        self.actual = actual
->>>>>>> 9a9f63ba265cb76be8d77c17601f3ec4f8fe725d
